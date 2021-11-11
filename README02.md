@@ -310,3 +310,56 @@ export const Router = () => {
     )
 }
 ```
+
+## URLパラメータを使う
+
+`src/UrlParameter.jsx`コンポーネントを作成<br>
+
+```
+import { useParams } from "react-router"
+
+export const UrlParameter = () => {
+    const { id } = useParams();
+    return (
+        <div>
+            <h1>UrlParameterページです</h1>
+            <p>パラメーターは {id} です</p>
+        </div>
+    )
+}
+```
+
+`src/router/Page2Routes.jsx`コンポーネントを作成<br>
+
+```
+import { Page2 } from '../Page2';
+import { UrlParameter } from '../UrlParameter';
+
+export const Page2Routes = [
+    {
+        path: '/',
+        exact: true,
+        children: <Page2 />,
+    },
+    {
+        path: '/:id',
+        exact: false,
+        children: <UrlParameter />,
+    },
+];
+```
+
+`src/Page2.jsx`の編集<br>
+
+```
+import { Link } from "react-router-dom"
+
+export const Page2 = () => {
+    return (
+        <div>
+            <h1>Page2ページです</h1>
+            <Link to="/page2/100">URL Parameter</Link>
+        </div>
+    )
+}
+```
