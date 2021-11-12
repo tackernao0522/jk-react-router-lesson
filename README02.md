@@ -459,3 +459,49 @@ export const UrlParameter = () => {
     )
 }
 ```
+
+## stateを渡すページ遷移
+
+`src/Page1.jsx`の編集<br>
+
+```
+import { Link } from "react-router-dom"
+
+export const Page1 = () => {
+    const arr = [...Array(100).keys()]; // 100件の配列にしてみる
+    // console.log(arr);
+    return (
+        <div>
+            <h1>Page1ページです</h1>
+            <Link to={{ pathname: "/page1/detailA", state: arr }}>DetailA</Link>
+            <br />
+            <Link to="/page1/detailB">DetailB</Link>
+        </div>
+    )
+}
+```
+
+`src/Page1DetailA.jsx`の編集<br>
+
+```
+import { useLocation } from "react-router-dom"
+
+export const Page1DetailA = () => {
+    const { state } = useLocation();
+    console.log(state); // stateの中に配列が渡ってきているのがわかる
+    const newArr = state.map((v) => {
+        if (v % 2 === 0) {
+            return v + ", ";
+        }
+    })
+
+    return (
+        <div>
+            <h1>Page1DetailAページです</h1>
+            <p>
+                { newArr }
+            </p>
+        </div>
+    )
+}
+```
