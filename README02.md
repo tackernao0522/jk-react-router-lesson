@@ -544,3 +544,75 @@ export const Page1DetailA = () => {
     )
 }
 ```
+
+## 404ページを用意
+
+`src/Page404.jsx`コンポーネントを作成<br>
+
+```
+import { Link } from "react-router-dom"
+
+export const Page404 = () => {
+    return (
+        <div>
+            <h1>ページが見つかりません</h1>
+            <Link to="/">TOPに戻る</Link>
+        </div>
+    )
+}
+```
+
+`src/router/Router.jsx`を編集<br>
+
+```
+import { Switch, Route } from 'react-router-dom';
+import { Home } from '../Home';
+import { Page404 } from '../Page404';
+import { Page1Routes } from './Page1Routes';
+import { Page2Routes } from './Page2Routes';
+
+export const Router = () => {
+    return (
+        <Switch>
+            <Route exact path="/">
+                <Home />
+            </Route>
+            <Route
+                path="/page1"
+                render={({ match: { url } }) => (
+            <Switch>
+                {Page1Routes.map((route) => (
+                    <Route
+                        key={route.path}
+                        exact={route.exact}
+                        path={`${url}${route.path}`}
+                    >
+                        {route.children}
+                    </Route>
+                ))}
+            </Switch>
+            )}
+        />
+        <Route
+                path="/page2"
+                render={({ match: { url } }) => (
+            <Switch>
+                {Page2Routes.map((route) => (
+                    <Route
+                        key={route.path}
+                        exact={route.exact}
+                        path={`${url}${route.path}`}
+                    >
+                        {route.children}
+                    </Route>
+                ))}
+            </Switch>
+            )}
+        />
+        <Route path="*"> // URLパラメータを設定してないURLが指定された場合は404ページに遷移する
+            <Page404 />
+        </Route>
+        </Switch>
+    )
+}
+```
