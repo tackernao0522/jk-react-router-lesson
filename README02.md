@@ -489,18 +489,57 @@ import { useLocation } from "react-router-dom"
 export const Page1DetailA = () => {
     const { state } = useLocation();
     console.log(state); // stateの中に配列が渡ってきているのがわかる
-    const newArr = state.map((v) => {
-        if (v % 2 === 0) {
-            return v + ", ";
-        }
-    })
 
     return (
         <div>
             <h1>Page1DetailAページです</h1>
-            <p>
-                { newArr }
-            </p>
+        </div>
+    )
+}
+```
+## Linkを使わないページ遷移 (JavaScript側でページ遷移する方法) 使用頻度高い
+
+`src/Page1.jsx`の編集<br>
+
+```
+import { Link, useHistory } from "react-router-dom" // 編集
+
+export const Page1 = () => {
+    const arr = [...Array(100).keys()]; // 100件の配列にしてみる
+    // console.log(arr);
+    const history = useHistory(); // 追記
+
+    const onClickDetailA = () => history.push("/page1/detailA") // 追記
+
+    return (
+        <div>
+            <h1>Page1ページです</h1>
+            <Link to={{ pathname: "/page1/detailA", state: arr }}>DetailA</Link>
+            <br />
+            <Link to="/page1/detailB">DetailB</Link>
+            <br />
+            <button onClick={onClickDetailA}>DetailA</button> // 追記
+        </div>
+    )
+}
+```
+
+`src/Page1Detail.jsx`の編集<br>
+
+```
+import { useLocation, useHistory } from "react-router-dom" // 編集
+
+export const Page1DetailA = () => {
+    const { state } = useLocation();
+    console.log(state); // stateの中に配列が渡ってきているのがわかる
+
+    const history = useHistory(); // 追記
+    const onClickBack = () => history.goBack(); // 追記
+
+    return (
+        <div>
+            <h1>Page1DetailAページです</h1>
+            <button onClick={onClickBack}>戻る</button> // 追記
         </div>
     )
 }
