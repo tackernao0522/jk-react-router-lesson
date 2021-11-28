@@ -203,6 +203,7 @@ function App() {
         // ここから編集
         <Route
           path="/page1"
+          // render関数はデフォルトでpropsを受け取っていてその中にはmatchプロパティが含まれていてその中のurlにpage1が入っている
           render={({ match: { url }}) => (
             <Switch>
               {/* {console.log(url)} /page1が取れている*/}
