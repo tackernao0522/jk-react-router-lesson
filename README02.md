@@ -370,7 +370,7 @@ export const Router = () => {
 `src/UrlParameter.jsx`コンポーネントを作成<br>
 
 ```
-import { useParams } from "react-router"
+import { useParams } from "react-router-dom"
 
 export const UrlParameter = () => {
     const { id } = useParams();
