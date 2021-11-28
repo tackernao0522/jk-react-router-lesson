@@ -418,6 +418,65 @@ export const Page2 = () => {
 }
 ```
 
++ `src/router/Router.jsx`を編集<br>
+
+```
+import { Route, Switch } from 'react-router'
+import { Home } from '../Home'
+import { Page1Routes } from './Page1Routes'
+import { Page2Routes } from './Page2Routes'
+
+export const Router = () => {
+  return (
+    <Switch>
+      <Route exact path="/">
+        <Home />
+      </Route>
+      <Route
+        path="/page1"
+        render={({ match: { url } }) => {
+          return (
+            <Switch>
+              {Page1Routes.map((route) => {
+                return (
+                  <Route
+                    key={route.path}
+                    exact={route.exact}
+                    path={`${url}${route.path}`}
+                  >
+                    {route.children}
+                  </Route>
+                )
+              })}
+            </Switch>
+          )
+        }}
+      />
+      <Route
+        path="/page2"
+        render={({ match: { url } }) => {
+          return (
+            <Switch>
+              {Page2Routes.map((route) => {
+                return (
+                  <Route
+                    key={route.path}
+                    exact={route.exact}
+                    path={`${url}${route.path}`}
+                  >
+                    {route.children}
+                  </Route>
+                )
+              })}
+            </Switch>
+          )
+        }}
+      ></Route>
+    </Switch>
+  )
+}
+```
+
 ## クエリパラメータ
 
 `src/page2.jsx`の編集<br>
