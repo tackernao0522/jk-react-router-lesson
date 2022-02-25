@@ -327,9 +327,9 @@ export const Page1Routes = [
 ];
 ```
 
-`App.js`の編集<br>
+`src/router/Router.jsx`の編集<br>
 
-```
+```jsx:Router.jsx
 import { Switch, Route } from 'react-router-dom';
 import { Home } from '../Home';
 import { Page2 } from '../Page2';
